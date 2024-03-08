@@ -25,7 +25,7 @@ class FilePickerUtil{
       permissionDescriptionText: permissionDescriptionText??"Permission is required to access files"
       )) {
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: fileType??FileType.any,
+        type: fileType,
         allowedExtensions: allowedExtensions,
         allowCompression: allowCompression,
         allowMultiple: allowMultiple
