@@ -1,10 +1,9 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:image_and_file_picker_utility/utils/file_picker_util.dart';
-import 'package:image_and_file_picker_utility/utils/image_picker_util.dart';
+import 'package:example/feature/widget/custom_button.dart';
+import 'package:example/feature/widget/file_list_item.dart';
 import 'package:file_picker/file_picker.dart';
-
+import 'package:flutter/material.dart';
+import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
 
 class ExampleScreen extends StatefulWidget {
   const ExampleScreen({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _ExampleScreenState extends State<ExampleScreen> {
                     if (index == files.length) {
                       return SizedBox.shrink();
                     }
-                    return FileButton(
+                    return FileListItem(
                       file: files[index],
                       onPressed: () {},
                     );
@@ -55,7 +54,7 @@ class _ExampleScreenState extends State<ExampleScreen> {
                       await ImagePickerUtil().showImagePickerBottomSheet(
                           context: context,
                           isCropImage: true,
-                          savePickedCameraImageToStorage:true,
+                          savePickedCameraImageToStorage: true,
                           pickImageImageQuality: 100,
                           onImageSelection: (File? pickedImage) {
                             if (pickedImage != null) {
@@ -69,16 +68,16 @@ class _ExampleScreenState extends State<ExampleScreen> {
                   CustomButton(
                     text: 'Pick File',
                     onPressed: () async {
-
                       final List<File>? pickedFileList =
                           await FilePickerUtil().getFilePicker(
-                            allowMultiple: true,
-                            allowCompression: true,
-                            fileType: FileType.any,
-                            /// When you want to pick specific extensions files then choose type as FileType.custom and pass the extensions using allowedExtensions parameter
-                            // type:FileType.custom,
-                            // allowedExtensions: ['jpg', 'pdf', 'doc'],
-                            context: context,
+                        allowMultiple: true,
+                        allowCompression: true,
+                        fileType: FileType.any,
+
+                        /// When you want to pick specific extensions files then choose type as FileType.custom and pass the extensions using allowedExtensions parameter
+                        // type:FileType.custom,
+                        // allowedExtensions: ['jpg', 'pdf', 'doc'],
+                        context: context,
                       );
                       if (pickedFileList != null && pickedFileList.isNotEmpty) {
                         for (var file in pickedFileList) {
@@ -92,63 +91,6 @@ class _ExampleScreenState extends State<ExampleScreen> {
                 ],
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-
-  const CustomButton({
-    required this.text,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
-        foregroundColor: MaterialStateProperty.all(Colors.white),
-        padding: MaterialStateProperty.all(
-            EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
-        shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-      ),
-      child: Text(text),
-    );
-  }
-}
-
-class FileButton extends StatelessWidget {
-  final File file;
-  final VoidCallback onPressed;
-
-  const FileButton({
-    required this.file,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: TextButton(
-        onPressed: onPressed,
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Text(
-            file.path.split('/').last,
-            style: TextStyle(fontSize: 16),
           ),
         ),
       ),

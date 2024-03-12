@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
-import 'package:image_and_file_picker_utility/utils/permission_util.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
 
-import '../widgets/custom_alert_with_two_buttons.dart';
 
 class ImagePickerUtil {
   Future<void> showImagePickerBottomSheet({
@@ -32,24 +30,28 @@ class ImagePickerUtil {
     bool savePickedCameraImageToStorage = false,
     required Function(File? file) onImageSelection,
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
-
   }) async {
     /// bottomSheet for image picker option
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
-        shape: bottomSheetShape??const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(15),
-          ),
-        ),
+        shape: bottomSheetShape ??
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(15),
+              ),
+            ),
         builder: (BuildContext _) => Wrap(
               children: [
                 Container(
                   color: Colors.transparent,
                   padding: bottomSheetInternalPadding ??
                       const EdgeInsets.only(
-                          left: 16, right: 16, top: 20, bottom: 15),
+                        left: 16,
+                        right: 16,
+                        top: 20,
+                        bottom: 15,
+                      ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -79,7 +81,9 @@ class ImagePickerUtil {
                         ),
                       ),
                       Container(
-                          color: Theme.of(context).dividerColor, height: 1),
+                        color: Theme.of(context).dividerColor,
+                        height: 1,
+                      ),
                       Wrap(
                         children: <Widget>[
                           InkWell(
@@ -87,8 +91,11 @@ class ImagePickerUtil {
                               /// handle camera permission
                               File? file = await getFromCameraWithPermissionCheck(
                                   context: context,
-                                  deniedPermissionsSettingsDialogModel: deniedPermissionsSettingsDialogModel,
-                                  permissionDescriptionText: cameraPermissionDescriptionText??"Permission required to access camera",
+                                  deniedPermissionsSettingsDialogModel:
+                                      deniedPermissionsSettingsDialogModel,
+                                  permissionDescriptionText:
+                                      cameraPermissionDescriptionText ??
+                                          "Permission required to access camera",
                                   isCrop: isCropImage,
                                   uiSettings: cropImagePlatformUiSettings,
                                   aspectRatioPresets:
@@ -122,8 +129,11 @@ class ImagePickerUtil {
                             onTap: () async {
                               File? file = await getFromGalleryWithPermissionCheck(
                                   context: context,
-                                  deniedPermissionsSettingsDialogModel: deniedPermissionsSettingsDialogModel,
-                                  permissionDescriptionText: galleryPermissionDescriptionText??'Permission required to access gallery',
+                                  deniedPermissionsSettingsDialogModel:
+                                      deniedPermissionsSettingsDialogModel,
+                                  permissionDescriptionText:
+                                      galleryPermissionDescriptionText ??
+                                          'Permission required to access gallery',
                                   isCrop: isCropImage,
                                   uiSettings: cropImagePlatformUiSettings,
                                   aspectRatioPresets:
@@ -136,7 +146,11 @@ class ImagePickerUtil {
                             child: Padding(
                               padding: bottomSheetItemPadding ??
                                   const EdgeInsets.only(
-                                      left: 0, right: 0, top: 15, bottom: 15),
+                                    left: 0,
+                                    right: 0,
+                                    top: 15,
+                                    bottom: 15,
+                                  ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -159,13 +173,14 @@ class ImagePickerUtil {
   }
 
   /// below method is for image cropping, customise as per your usage
-  Future<File?> cropImage(
-      {required File file,
-      required BuildContext context,
-      List<PlatformUiSettings>? uiSettings,
-      List<CropAspectRatioPreset>? aspectRatioPresets,
-        int? cropImageMaxWidth,
-        int? cropImageMaxHeight,}) async {
+  Future<File?> cropImage({
+    required File file,
+    required BuildContext context,
+    List<PlatformUiSettings>? uiSettings,
+    List<CropAspectRatioPreset>? aspectRatioPresets,
+    int? cropImageMaxWidth,
+    int? cropImageMaxHeight,
+  }) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
       maxHeight: cropImageMaxHeight,
       maxWidth: cropImageMaxWidth,
@@ -207,17 +222,18 @@ class ImagePickerUtil {
     int? cropImageMaxWidth,
     int? cropImageMaxHeight,
   }) async {
-    if (Platform.isAndroid?await PermissionUtil.getStoragePermission(
-      context: context,
-      deniedPermissionsSettingsDialogModel:
-      deniedPermissionsSettingsDialogModel,
-      permissionDescriptionText: permissionDescriptionText,
-    ):await PermissionUtil.getPhotosPermission(
-        context: context,
-        deniedPermissionsSettingsDialogModel:
-        deniedPermissionsSettingsDialogModel,
-        permissionDescriptionText: permissionDescriptionText
-    )) {
+    if (Platform.isAndroid
+        ? await PermissionUtil.getStoragePermission(
+            context: context,
+            deniedPermissionsSettingsDialogModel:
+                deniedPermissionsSettingsDialogModel,
+            permissionDescriptionText: permissionDescriptionText,
+          )
+        : await PermissionUtil.getPhotosPermission(
+            context: context,
+            deniedPermissionsSettingsDialogModel:
+                deniedPermissionsSettingsDialogModel,
+            permissionDescriptionText: permissionDescriptionText)) {
       XFile? pickedFile = await ImagePicker().pickImage(
         source: ImageSource.gallery,
         maxWidth: pickImageMaxWidth,
@@ -228,7 +244,9 @@ class ImagePickerUtil {
         return cropImage(
             file: File(pickedFile.path),
             context: context,
-            uiSettings: uiSettings,cropImageMaxHeight: cropImageMaxHeight,cropImageMaxWidth: cropImageMaxWidth);
+            uiSettings: uiSettings,
+            cropImageMaxHeight: cropImageMaxHeight,
+            cropImageMaxWidth: cropImageMaxWidth);
       }
 
       return pickedFile != null ? File(pickedFile.path) : null;
@@ -253,8 +271,9 @@ class ImagePickerUtil {
   }) async {
     if (await PermissionUtil.getCameraPermission(
         context: context,
-      deniedPermissionsSettingsDialogModel:
-      deniedPermissionsSettingsDialogModel,permissionDescriptionText: permissionDescriptionText)) {
+        deniedPermissionsSettingsDialogModel:
+            deniedPermissionsSettingsDialogModel,
+        permissionDescriptionText: permissionDescriptionText)) {
       XFile? pickedFile = await ImagePicker().pickImage(
         source: ImageSource.camera,
         maxWidth: pickImageMaxWidth,
@@ -265,7 +284,9 @@ class ImagePickerUtil {
         File? croppedImageFile = await cropImage(
             file: File(pickedFile.path),
             context: context,
-            uiSettings: uiSettings,cropImageMaxWidth: cropImageMaxWidth,cropImageMaxHeight: cropImageMaxHeight);
+            uiSettings: uiSettings,
+            cropImageMaxWidth: cropImageMaxWidth,
+            cropImageMaxHeight: cropImageMaxHeight);
         if (croppedImageFile != null && saveCameraImage) {
           await Gal.putImage(croppedImageFile.path);
         }

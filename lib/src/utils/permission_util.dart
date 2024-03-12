@@ -1,15 +1,14 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../widgets/custom_alert_with_two_buttons.dart';
 
 class PermissionUtil {
   static Future<bool> getStoragePermission({
     required BuildContext context,
     required String permissionDescriptionText,
-    DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel
+    DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
     PermissionStatus? status;
     if (Platform.isAndroid) {
@@ -28,10 +27,10 @@ class PermissionUtil {
         if (status == PermissionStatus.permanentlyDenied ||
             status.isRestricted) {
           customDialog(
-            context: context,
-            deniedPermissionsSettingsDialogModel: deniedPermissionsSettingsDialogModel,
-            permissionDescriptionText: permissionDescriptionText
-          );
+              context: context,
+              deniedPermissionsSettingsDialogModel:
+                  deniedPermissionsSettingsDialogModel,
+              permissionDescriptionText: permissionDescriptionText);
           return false;
         } else {
           return false;
@@ -43,8 +42,9 @@ class PermissionUtil {
                 status == PermissionStatus.restricted) {
               customDialog(
                 context: context,
-                deniedPermissionsSettingsDialogModel: deniedPermissionsSettingsDialogModel,
-                permissionDescriptionText: permissionDescriptionText
+                deniedPermissionsSettingsDialogModel:
+                    deniedPermissionsSettingsDialogModel,
+                permissionDescriptionText: permissionDescriptionText,
               );
               return false;
             } else {
@@ -61,8 +61,7 @@ class PermissionUtil {
   static Future<bool> getCameraPermission({
     required BuildContext context,
     required String permissionDescriptionText,
-     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel
-
+    DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
     PermissionStatus status = await Permission.camera.request();
     if (status == PermissionStatus.granted) {
@@ -78,7 +77,8 @@ class PermissionUtil {
         customDialog(
           context: context,
           permissionDescriptionText: permissionDescriptionText,
-          deniedPermissionsSettingsDialogModel: deniedPermissionsSettingsDialogModel,
+          deniedPermissionsSettingsDialogModel:
+              deniedPermissionsSettingsDialogModel,
         );
         return false;
       } else {
@@ -91,7 +91,8 @@ class PermissionUtil {
   static Future<bool> getPhotosPermission({
     required BuildContext context,
     required String permissionDescriptionText,
-    required DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel
+    required DeniedPermissionsSettingsDialogModel?
+        deniedPermissionsSettingsDialogModel,
   }) async {
     PermissionStatus status = await Permission.photos.request();
     if (status == PermissionStatus.granted ||
@@ -105,7 +106,8 @@ class PermissionUtil {
         customDialog(
           context: context,
           permissionDescriptionText: permissionDescriptionText,
-          deniedPermissionsSettingsDialogModel: deniedPermissionsSettingsDialogModel,
+          deniedPermissionsSettingsDialogModel:
+              deniedPermissionsSettingsDialogModel,
         );
         return false;
       } else {
@@ -117,7 +119,7 @@ class PermissionUtil {
   static customDialog({
     required BuildContext context,
     required String permissionDescriptionText,
-    DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel
+    DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) {
     showDialog(
         context: context,
@@ -148,10 +150,15 @@ class PermissionUtil {
                 ],
               ),
               child: CustomAlertWithTwoButtons(
-                titleText:deniedPermissionsSettingsDialogModel?.titleText??'Permission Required',
+                titleText: deniedPermissionsSettingsDialogModel?.titleText ??
+                    'Permission Required',
                 descriptionText: permissionDescriptionText,
-                negativeButtonText: deniedPermissionsSettingsDialogModel?.negativeButtonText??"Close",
-                settingsButtonText: deniedPermissionsSettingsDialogModel?.settingsButtonText??'Go To Settings',
+                negativeButtonText:
+                    deniedPermissionsSettingsDialogModel?.negativeButtonText ??
+                        "Close",
+                settingsButtonText:
+                    deniedPermissionsSettingsDialogModel?.settingsButtonText ??
+                        'Go To Settings',
               ),
             ),
           );
@@ -159,6 +166,6 @@ class PermissionUtil {
   }
 
   Future<void> openSettings() async {
-     await openAppSettings();
+    await openAppSettings();
   }
 }

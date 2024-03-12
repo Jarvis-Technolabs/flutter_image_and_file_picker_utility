@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:image_and_file_picker_utility/utils/permission_util.dart';
+
+import '../utils/permission_util.dart';
 
 class CustomAlertWithTwoButtons extends StatelessWidget {
   final String titleText;
@@ -25,7 +26,7 @@ class CustomAlertWithTwoButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 25.0,
         horizontal: 20.0,
       ),
@@ -57,7 +58,9 @@ class CustomAlertWithTwoButtons extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                child: Text(negativeButtonText),
+                child: Text(
+                  negativeButtonText,
+                ),
               ),
               OutlinedButton(
                 onPressed: () async {
@@ -72,7 +75,9 @@ class CustomAlertWithTwoButtons extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                child: Text(settingsButtonText),
+                child: Text(
+                  settingsButtonText,
+                ),
               ),
             ],
           ),
@@ -80,23 +85,4 @@ class CustomAlertWithTwoButtons extends StatelessWidget {
       ),
     );
   }
-}
-
-class DeniedPermissionsSettingsDialogModel {
-  final String? titleText;
-  final String? settingsButtonText;
-  final String? negativeButtonText;
-  final TextStyle? titleTextStyle;
-  final TextStyle? descriptionTextStyle;
-  final ButtonStyle? settingsButtonStyle;
-  final ButtonStyle? negativeButtonStyle;
-
-  DeniedPermissionsSettingsDialogModel(
-      { this.titleText,
-       this.settingsButtonText,
-       this.negativeButtonText,
-       this.titleTextStyle,
-       this.descriptionTextStyle,
-       this.settingsButtonStyle,
-       this.negativeButtonStyle});
 }

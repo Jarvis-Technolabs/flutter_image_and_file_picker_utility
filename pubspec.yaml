@@ -1,7 +1,7 @@
 name: image_and_file_picker_utility
 description: "A new Flutter project."
 version: 0.0.1
-homepage:
+homepage: https://jarvistechnolabs.com/
 
 environment:
   sdk: '>=3.2.6 <4.0.0'
@@ -10,12 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  image_picker: 1.0.0
-  file_picker: 5.3.1
-  permission_handler: 11.0.1
-  device_info_plus: 9.0.2
-  image_cropper: ^4.0.1
-  path_provider: ^2.0.9
+  image_picker: ^1.0.7
+  file_picker: ^6.2.0
+  permission_handler: ^11.3.0
+  device_info_plus: ^9.1.2
+  image_cropper: ^5.0.1
+  path_provider: ^2.1.2
   gal: ^2.3.0
 
 dev_dependencies:
