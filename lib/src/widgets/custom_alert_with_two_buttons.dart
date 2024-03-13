@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/permission_util.dart';
+import '../utils/permission_handler.dart';
 
 class CustomAlertWithTwoButtons extends StatelessWidget {
   final String titleText;
@@ -12,7 +12,7 @@ class CustomAlertWithTwoButtons extends StatelessWidget {
   final ButtonStyle? settingsButtonStyle;
   final ButtonStyle? negativeButtonStyle;
 
-  CustomAlertWithTwoButtons({
+  const CustomAlertWithTwoButtons({super.key,
     required this.titleText,
     required this.descriptionText,
     required this.negativeButtonText,
@@ -31,20 +31,20 @@ class CustomAlertWithTwoButtons extends StatelessWidget {
         horizontal: 20.0,
       ),
       child: ListView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [
           Text(
             titleText,
             style: titleTextStyle ?? Theme.of(context).textTheme.headlineSmall,
           ),
-          SizedBox(height: 18.0),
+          const SizedBox(height: 18.0),
           Text(
             descriptionText,
             style: Theme.of(context).textTheme.titleMedium,
             maxLines: 10,
           ),
-          SizedBox(height: 23.0),
+          const SizedBox(height: 23.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -52,7 +52,7 @@ class CustomAlertWithTwoButtons extends StatelessWidget {
                 onPressed: () => Navigator.pop(context),
                 style: negativeButtonStyle ??
                     OutlinedButton.styleFrom(
-                      primary: Theme.of(context).secondaryHeaderColor,
+                      foregroundColor: Theme.of(context).secondaryHeaderColor,
                       backgroundColor: Theme.of(context).primaryColor,
                       side: BorderSide(
                         color: Theme.of(context).primaryColor,
@@ -65,11 +65,11 @@ class CustomAlertWithTwoButtons extends StatelessWidget {
               OutlinedButton(
                 onPressed: () async {
                   Navigator.pop(context);
-                  await PermissionUtil().openSettings();
+                  await PermissionHandler().openSettings();
                 },
                 style: settingsButtonStyle ??
                     OutlinedButton.styleFrom(
-                      primary: Theme.of(context).secondaryHeaderColor,
+                      foregroundColor: Theme.of(context).secondaryHeaderColor,
                       backgroundColor: Theme.of(context).primaryColor,
                       side: BorderSide(
                         color: Theme.of(context).primaryColor,
