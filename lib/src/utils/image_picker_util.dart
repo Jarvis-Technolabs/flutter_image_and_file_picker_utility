@@ -223,13 +223,13 @@ class ImagePickerUtil {
     int? cropImageMaxHeight,
   }) async {
     if (Platform.isAndroid
-        ? await PermissionUtil.getStoragePermission(
+        ? await PermissionHandler().getStoragePermission(
             context: context,
             deniedPermissionsSettingsDialogModel:
                 deniedPermissionsSettingsDialogModel,
             permissionDescriptionText: permissionDescriptionText,
           )
-        : await PermissionUtil.getPhotosPermission(
+        : await PermissionHandler().getPhotosPermission(
             context: context,
             deniedPermissionsSettingsDialogModel:
                 deniedPermissionsSettingsDialogModel,
@@ -241,9 +241,9 @@ class ImagePickerUtil {
         imageQuality: pickImageImageQuality,
       );
       if (pickedFile != null && isCrop) {
-        return cropImage(
+        return  cropImage(
             file: File(pickedFile.path),
-            context: context,
+            context: context.mounted? context:context,
             uiSettings: uiSettings,
             cropImageMaxHeight: cropImageMaxHeight,
             cropImageMaxWidth: cropImageMaxWidth);
@@ -269,7 +269,7 @@ class ImagePickerUtil {
     int? cropImageMaxWidth,
     int? cropImageMaxHeight,
   }) async {
-    if (await PermissionUtil.getCameraPermission(
+    if (await PermissionHandler().getCameraPermission(
         context: context,
         deniedPermissionsSettingsDialogModel:
             deniedPermissionsSettingsDialogModel,
@@ -283,7 +283,7 @@ class ImagePickerUtil {
       if (pickedFile != null && isCrop) {
         File? croppedImageFile = await cropImage(
             file: File(pickedFile.path),
-            context: context,
+            context: context.mounted? context:context,
             uiSettings: uiSettings,
             cropImageMaxWidth: cropImageMaxWidth,
             cropImageMaxHeight: cropImageMaxHeight);

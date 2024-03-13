@@ -1,5 +1,5 @@
 library image_and_file_picker_utility;
-export 'package:image_and_file_picker_utility/src/utils/permission_util.dart';
+export 'package:image_and_file_picker_utility/src/utils/permission_handler.dart';
 export 'package:image_and_file_picker_utility/src/utils/image_picker_util.dart';
 export 'package:image_and_file_picker_utility/src/utils/file_picker_util.dart';
 export 'package:image_and_file_picker_utility/src/entities/denied_permission_settings_dialog_model.dart';

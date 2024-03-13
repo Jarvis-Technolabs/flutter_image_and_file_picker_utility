@@ -13,7 +13,7 @@ class FilePickerUtil {
     bool allowMultiple = false,
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
-    if (await PermissionUtil.getStoragePermission(
+    if (await PermissionHandler().getStoragePermission(
       context: context,
       deniedPermissionsSettingsDialogModel:
           deniedPermissionsSettingsDialogModel,
