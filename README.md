@@ -134,6 +134,10 @@ Image picking from gallery:
 Image cropping
 
 ```
+    import 'package:image_cropper/image_cropper.dart';
+```
+
+```
     File? file = await cropImage(
       file: File("path"),
       context: context,
