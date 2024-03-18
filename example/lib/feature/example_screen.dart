@@ -75,7 +75,7 @@ class _ExampleScreenState extends State<ExampleScreen> {
                         fileType: FileType.any,
 
                         /// When you want to pick specific extensions files then choose type as FileType.custom and pass the extensions using allowedExtensions parameter
-                        // type:FileType.custom,
+                        // fileType:FileType.custom,
                         // allowedExtensions: ['jpg', 'pdf', 'doc'],
                         context: context,
                       );
