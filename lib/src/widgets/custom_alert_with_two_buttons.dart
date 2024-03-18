@@ -12,7 +12,8 @@ class CustomAlertWithTwoButtons extends StatelessWidget {
   final ButtonStyle? settingsButtonStyle;
   final ButtonStyle? negativeButtonStyle;
 
-  const CustomAlertWithTwoButtons({super.key,
+  const CustomAlertWithTwoButtons({
+    super.key,
     required this.titleText,
     required this.descriptionText,
     required this.negativeButtonText,

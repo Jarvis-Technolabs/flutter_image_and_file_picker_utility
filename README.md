@@ -24,7 +24,7 @@ Add the following dependency to your pubspec.yaml file:
 
 ```
     dependencies:
-    image_and_file_picker_utility: ^0.0.3
+      image_and_file_picker_utility: ^0.0.4
 
 ```
 
@@ -52,11 +52,12 @@ Add activity to the application tag for crop image:
 
 ```
     <application>
-    <activity
-    android:name="com.yalantis.ucrop.UCropActivity"
-    android:exported="true"
-    android:screenOrientation="portrait"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" 
+        </activity>
     </application>
 
 ```

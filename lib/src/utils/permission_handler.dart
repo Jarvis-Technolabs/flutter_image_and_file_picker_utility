@@ -1,12 +1,12 @@
 import 'dart:io';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionHandler {
-
-   Future<bool> getStoragePermission({
+  Future<bool> getStoragePermission({
     required BuildContext context,
     required String permissionDescriptionText,
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
@@ -28,7 +28,7 @@ class PermissionHandler {
         if (status == PermissionStatus.permanentlyDenied ||
             status.isRestricted) {
           customDialog(
-              context: context.mounted? context:context,
+              context: context.mounted ? context : context,
               deniedPermissionsSettingsDialogModel:
                   deniedPermissionsSettingsDialogModel,
               permissionDescriptionText: permissionDescriptionText);
@@ -59,7 +59,7 @@ class PermissionHandler {
   }
 
   /// This permission is use for the access the camera
-   Future<bool> getCameraPermission({
+  Future<bool> getCameraPermission({
     required BuildContext context,
     required String permissionDescriptionText,
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
@@ -76,7 +76,7 @@ class PermissionHandler {
               (status == PermissionStatus.restricted ||
                   status == PermissionStatus.permanentlyDenied))) {
         customDialog(
-          context: context.mounted? context:context,
+          context: context.mounted ? context : context,
           permissionDescriptionText: permissionDescriptionText,
           deniedPermissionsSettingsDialogModel:
               deniedPermissionsSettingsDialogModel,
@@ -89,7 +89,7 @@ class PermissionHandler {
   }
 
   /// This permission is use for the access the photos (For ios only)
-   Future<bool> getPhotosPermission({
+  Future<bool> getPhotosPermission({
     required BuildContext context,
     required String permissionDescriptionText,
     required DeniedPermissionsSettingsDialogModel?
@@ -105,7 +105,7 @@ class PermissionHandler {
       if (status == PermissionStatus.restricted ||
           status == PermissionStatus.permanentlyDenied) {
         customDialog(
-          context: context.mounted? context:context,
+          context: context.mounted ? context : context,
           permissionDescriptionText: permissionDescriptionText,
           deniedPermissionsSettingsDialogModel:
               deniedPermissionsSettingsDialogModel,
@@ -117,7 +117,7 @@ class PermissionHandler {
     }
   }
 
-   customDialog({
+  customDialog({
     required BuildContext context,
     required String permissionDescriptionText,
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,

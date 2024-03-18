@@ -1,10 +1,10 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
+import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
-
 
 class ImagePickerUtil {
   Future<void> showImagePickerBottomSheet({
@@ -241,9 +241,9 @@ class ImagePickerUtil {
         imageQuality: pickImageImageQuality,
       );
       if (pickedFile != null && isCrop) {
-        return  cropImage(
+        return cropImage(
             file: File(pickedFile.path),
-            context: context.mounted? context:context,
+            context: context.mounted ? context : context,
             uiSettings: uiSettings,
             cropImageMaxHeight: cropImageMaxHeight,
             cropImageMaxWidth: cropImageMaxWidth);
@@ -283,7 +283,7 @@ class ImagePickerUtil {
       if (pickedFile != null && isCrop) {
         File? croppedImageFile = await cropImage(
             file: File(pickedFile.path),
-            context: context.mounted? context:context,
+            context: context.mounted ? context : context,
             uiSettings: uiSettings,
             cropImageMaxWidth: cropImageMaxWidth,
             cropImageMaxHeight: cropImageMaxHeight);
