@@ -14,6 +14,12 @@ in your Flutter applications.
 * Image compression for optimized storage usage
 * File picking with permission handling
 
+## **Flutter Compatibility**
+
+| **Package version** | **Flutter version** |
+|:-------------------:|:-------------------:|
+|        0.0.5        |   3.16.0 - 3.19.3   |
+
 ## **Getting Started**
 
 To integrate the package into your Flutter project, follow these steps:
@@ -24,7 +30,7 @@ Add the following dependency to your pubspec.yaml file:
 
 ```
     dependencies:
-      image_and_file_picker_utility: ^0.0.4
+      image_and_file_picker_utility: ^0.0.5
 
 ```
 

@@ -1,6 +1,6 @@
 name: image_and_file_picker_utility
 description: "This Flutter package simplifies the process of picking images and files with common utilities."
-version: 0.0.4
+version: 0.0.5
 homepage: https://jarvistechnolabs.com/
 
 environment:
