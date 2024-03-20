@@ -187,9 +187,10 @@ packages:
   image_and_file_picker_utility:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      name: image_and_file_picker_utility
+      sha256: "0ee8b32b52031e24aebf967738d8586020d71667852360194f3d380c5b202563"
+      url: "https://pub.dev"
+    source: hosted
     version: "0.0.5"
   image_cropper:
     dependency: transitive

@@ -30,7 +30,7 @@ Add the following dependency to your pubspec.yaml file:
 
 ```
     dependencies:
-      image_and_file_picker_utility: ^0.0.5
+      image_and_file_picker_utility: ^0.0.6
 
 ```
 
