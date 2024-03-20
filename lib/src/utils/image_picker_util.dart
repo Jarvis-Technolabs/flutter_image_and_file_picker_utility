@@ -8,27 +8,70 @@ import 'package:image_picker/image_picker.dart';
 
 class ImagePickerUtil {
   Future<void> showImagePickerBottomSheet({
+    /// [context] as BuildContext
     context,
+
+    /// [bottomSheetTitle] pass String value for ImagePicker bottomSheet's title
     String? bottomSheetTitle,
+
+    /// [cameraTitle] pass String value for ImagePicker bottomSheet's camera option title
     String? cameraTitle,
+
+    /// [galleryTitle] pass String value for ImagePicker bottomSheet's gallery option title
     String? galleryTitle,
+
+    /// [cameraPermissionDescriptionText] pass String value for permanently denied camera permission dialog description
     String? cameraPermissionDescriptionText,
+
+    /// [galleryPermissionDescriptionText] pass String value for permanently denied photo/storage permission dialog description to access images
     String? galleryPermissionDescriptionText,
+
+    /// [isCropImage] pass bool value true for enable image cropping
     bool isCropImage = false,
+
+    /// [bottomSheetTitleStyle] pass TextStyle for ImagePicker bottomSheet's title
     TextStyle? bottomSheetTitleStyle,
+
+    /// [cameraTitleStyle] pass TextStyle for ImagePicker bottomSheet's camera title text
     TextStyle? cameraTitleStyle,
+
+    /// [galleryTitleStyle] pass TextStyle for ImagePicker bottomSheet's gallery title text
     TextStyle? galleryTitleStyle,
+
+    /// [bottomSheetInternalPadding] ImagePicker bottomSheet's internal padding
     EdgeInsetsGeometry? bottomSheetInternalPadding,
+
+    /// [bottomSheetItemPadding] ImagePicker bottomSheet's item padding (camera,gallery)
     EdgeInsetsGeometry? bottomSheetItemPadding,
+
+    /// [bottomSheetTitlePadding] ImagePicker bottomSheet's title padding
     EdgeInsetsGeometry? bottomSheetTitlePadding,
+
+    /// [cropImagePlatformUiSettings] pass the List<PlatformUiSettings> if [isCropImage] is true
     List<PlatformUiSettings>? cropImagePlatformUiSettings,
+
+    /// [cropImageAspectRatioPresets] pass the List<CropAspectRatioPreset> if [isCropImage] is true
     List<CropAspectRatioPreset>? cropImageAspectRatioPresets,
+
+    /// [cropImageAspectRatioPresets] pass the int value if [isCropImage] is true
     int? cropImageMaxWidth,
+
+    /// [cropImageMaxHeight] pass the int value if [isCropImage] is true
     int? cropImageMaxHeight,
+
+    /// [pickImageImageQuality] pass the int value between 0 to 100 for image compression while picking image
     int? pickImageImageQuality,
+
+    /// [bottomSheetShape] pass the ShapeBorder according to your requirement
     ShapeBorder? bottomSheetShape,
+
+    /// [savePickedCameraImageToStorage] pass the bool value to true if you want to save the capture image from camera to gallery
     bool savePickedCameraImageToStorage = false,
+
+    /// Return the selected file from the image picker
     required Function(File? file) onImageSelection,
+
+    /// [deniedPermissionsSettingsDialogModel] pass the object to customize denied permission dialog
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
     /// bottomSheet for image picker option
@@ -174,11 +217,25 @@ class ImagePickerUtil {
 
   /// below method is for image cropping, customise as per your usage
   Future<File?> cropImage({
+    ///  pass file object
     required File file,
+
+    /// pass the BuildContext
     required BuildContext context,
+
+    /// [uiSettings] controls UI customization on specific platform (android, ios, web,...)
+    /// See:
+    ///  * [AndroidUiSettings] controls UI customization for Android
+    ///  * [IOSUiSettings] controls UI customization for iOS    List<PlatformUiSettings>? uiSettings,
     List<PlatformUiSettings>? uiSettings,
+
+    ///  [aspectRatioPresets] controls the list of aspect ratios in the crop menu view.
     List<CropAspectRatioPreset>? aspectRatioPresets,
+
+    /// [cropImageMaxWidth] pass int value for max width of cropImage
     int? cropImageMaxWidth,
+
+    /// [cropImageMaxHeight] pass int value for max height of cropImage
     int? cropImageMaxHeight,
   }) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
@@ -209,17 +266,43 @@ class ImagePickerUtil {
     return croppedFile != null ? File(croppedFile.path) : null;
   }
 
+  /// below method is for pick image from gallery
+
   Future<File?> getFromGalleryWithPermissionCheck({
+    /// pass the BuildContext
     required BuildContext context,
+
+    /// [deniedPermissionsSettingsDialogModel] pass the object to customize denied permission dialog
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
+
+    /// [permissionDescriptionText] pass String value for permanently denied photo/storage permission dialog description to access images
     required String permissionDescriptionText,
+
+    /// [uiSettings] controls UI customization on specific platform (android, ios, web,...)
+    /// See:
+    ///  * [AndroidUiSettings] controls UI customization for Android
+    ///  * [IOSUiSettings] controls UI customization for iOS    List<PlatformUiSettings>? uiSettings,
     List<PlatformUiSettings>? uiSettings,
+
+    ///  [aspectRatioPresets] controls the list of aspect ratios in the crop menu view.
     List<CropAspectRatioPreset>? aspectRatioPresets,
+
+    /// [pickImageMaxWidth] pass double value for max width of picking Image
     double? pickImageMaxWidth,
+
+    /// [pickImageMaxHeight] pass double value for max height of picking Image
     double? pickImageMaxHeight,
+
+    /// [pickImageImageQuality] pass the int value between 0 to 100 for image compression while picking image
     int? pickImageImageQuality,
+
+    /// [isCrop] pass bool value true for enable image cropping
     bool isCrop = false,
+
+    /// [cropImageMaxWidth] pass int value for max width of cropImage
     int? cropImageMaxWidth,
+
+    /// [cropImageMaxHeight] pass int value for max height of cropImage
     int? cropImageMaxHeight,
   }) async {
     if (Platform.isAndroid
@@ -255,19 +338,47 @@ class ImagePickerUtil {
     }
   }
 
+  /// below method is for pick image from camera
+
   Future<File?> getFromCameraWithPermissionCheck({
+    /// pass the BuildContext
     required BuildContext context,
-    required String permissionDescriptionText,
+
+    /// [deniedPermissionsSettingsDialogModel] pass the object to customize denied permission dialog
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
-    bool isCrop = false,
+
+    /// [permissionDescriptionText] pass String value for permanently denied camera permission dialog description to access camera
+    required String permissionDescriptionText,
+
+    /// [uiSettings] controls UI customization on specific platform (android, ios, web,...)
+    /// See:
+    ///  * [AndroidUiSettings] controls UI customization for Android
+    ///  * [IOSUiSettings] controls UI customization for iOS    List<PlatformUiSettings>? uiSettings,
     List<PlatformUiSettings>? uiSettings,
+
+    ///  [aspectRatioPresets] controls the list of aspect ratios in the crop menu view.
     List<CropAspectRatioPreset>? aspectRatioPresets,
+
+    /// [pickImageMaxWidth] pass double value for max width of picking Image
     double? pickImageMaxWidth,
+
+    /// [pickImageMaxHeight] pass double value for max height of picking Image
     double? pickImageMaxHeight,
+
+    /// [pickImageImageQuality] pass the int value between 0 to 100 for image compression while picking image
     int? pickImageImageQuality,
-    bool saveCameraImage = false,
+
+    /// [isCrop] pass bool value true for enable image cropping
+    bool isCrop = false,
+
+    /// [cropImageMaxWidth] pass int value for max width of cropImage
     int? cropImageMaxWidth,
+
+    /// [cropImageMaxHeight] pass int value for max height of cropImage
     int? cropImageMaxHeight,
+
+    /// [saveCameraImage] pass the bool value to true if you want to save the capture image from camera to gallery
+    bool saveCameraImage = false,
   }) async {
     if (await PermissionHandler().getCameraPermission(
         context: context,

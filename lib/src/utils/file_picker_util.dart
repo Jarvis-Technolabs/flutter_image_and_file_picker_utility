@@ -5,13 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
 
 class FilePickerUtil {
+  /// pick single or multiple file using this method with permission handling
   Future<List<File>?> getFilePicker({
+    /// context
     required BuildContext context,
+
+    /// [permissionDescriptionText] provide description text which describe that permission requirement
     String? permissionDescriptionText,
+
+    /// default [fileType] is [FileType.any], you can pass [fileType] as per your requirement
     FileType fileType = FileType.any,
+
+    /// [allowedExtensions] pass array of allowedExtensions
     List<String>? allowedExtensions,
+
+    /// [allowCompression] pass bool value for compression
     bool allowCompression = false,
+
+    /// [allowMultiple] pass bool value for allowMultiple
     bool allowMultiple = false,
+
+    /// Using [deniedPermissionsSettingsDialogModel] we can able to customize denied permission dialog style and content
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
     if (await PermissionHandler().getStoragePermission(
