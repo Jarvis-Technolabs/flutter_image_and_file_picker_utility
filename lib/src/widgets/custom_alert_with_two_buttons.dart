@@ -3,14 +3,29 @@ import 'package:flutter/material.dart';
 import '../utils/permission_handler.dart';
 
 class CustomAlertWithTwoButtons extends StatelessWidget {
+  /// Denied permissions settings dialog's title text
   final String titleText;
+
+  /// Denied permissions settings dialog's setting button text
   final String settingsButtonText;
-  final String descriptionText;
+
+  /// Denied permissions settings dialog's cancel/negative button text
   final String negativeButtonText;
+
+  /// Denied permissions settings dialog's title text style text
   final TextStyle? titleTextStyle;
+
+  /// Denied permissions settings dialog's description text style text
   final TextStyle? descriptionTextStyle;
+
+  /// Denied permissions settings dialog's setting button style
   final ButtonStyle? settingsButtonStyle;
+
+  /// Denied permissions settings dialog's cancel/negative button style
   final ButtonStyle? negativeButtonStyle;
+
+  /// pass String value for permanently denied permission dialog description
+  final String descriptionText;
 
   const CustomAlertWithTwoButtons({
     super.key,
