@@ -72,7 +72,7 @@ Add activity to the application tag for crop image:
 
 Add permission to the Podfile like below:
 
-``` xml
+``` ruby
     post_install do |installer|
     installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
