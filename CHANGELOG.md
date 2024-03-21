@@ -1,3 +1,7 @@
+## 0.0.7
+
+README.md update
+
 ## 0.0.6
 
 README.md update

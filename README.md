@@ -18,7 +18,7 @@ in your Flutter applications.
 
 | **Package version** | **Flutter version** |
 |:-------------------:|:-------------------:|
-|        0.0.5        |   3.16.0 - 3.19.3   |
+|        0.0.7        |   3.16.0 - 3.19.3   |
 
 ## **Getting Started**
 
@@ -28,15 +28,15 @@ To integrate the package into your Flutter project, follow these steps:
 
 Add the following dependency to your pubspec.yaml file:
 
-```
+``` dart
     dependencies:
-      image_and_file_picker_utility: ^0.0.6
+      image_and_file_picker_utility: ^0.0.7
 
 ```
 
 Then run:
 
-```
+``` dart
     flutter pub get
 
 ```
@@ -45,7 +45,7 @@ Then run:
 
 Add Permissions to AndroidManifest.xml:
 
-```
+``` xml
     <uses-permission android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -56,7 +56,7 @@ Add Permissions to AndroidManifest.xml:
 
 Add activity to the application tag for crop image:
 
-```
+``` xml
     <application>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -72,7 +72,7 @@ Add activity to the application tag for crop image:
 
 Add permission to the Podfile like below:
 
-```
+``` xml
     post_install do |installer|
     installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
@@ -91,7 +91,7 @@ Add permission to the Podfile like below:
 
 Add permission usage to the info.plist file:
 
-```
+``` xml
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Our application needs permission to access photos</string>
     <key>NSCameraUsageDescription</key>
@@ -104,7 +104,7 @@ Add permission usage to the info.plist file:
 
 Image picking with bottom sheet:
 
-```
+``` dart
     await ImagePickerUtil().showImagePickerBottomSheet(
       context: context,
       isCropImage: true,
@@ -117,7 +117,7 @@ Image picking with bottom sheet:
 
 Image picking from camera:
 
-```
+``` dart
     File? file = await getFromCameraWithPermissionCheck(
       context: context,
       permissionDescriptionText: "Permission required to access camera",
@@ -129,7 +129,7 @@ Image picking from camera:
 
 Image picking from gallery:
 
-```
+``` dart
     File? file = await getFromGalleryWithPermissionCheck(
       context: context,
       permissionDescriptionText: 'Permission required to access gallery',
@@ -140,11 +140,11 @@ Image picking from gallery:
 
 Image cropping
 
-```
+``` dart
     import 'package:image_cropper/image_cropper.dart';
 ```
 
-```
+``` dart
     File? file = await cropImage(
       file: File("path"),
       context: context,
@@ -154,11 +154,11 @@ Image cropping
 
 #### File:
 
-```
+``` dart
     import 'package:file_picker/file_picker.dart';
 ```
 
-```
+``` dart
     final List<File>? pickedFileList = await FilePickerUtil().getFilePicker(
       allowMultiple: true,
       allowCompression: true,
@@ -175,7 +175,7 @@ Image cropping
 
 Storage permission:
 
-```
+``` dart
     bool isPermissionGranted = await PermissionHandler().getStoragePermission(
       context: context,
       permissionDescriptionText: "Permission is required to access files",
@@ -185,7 +185,7 @@ Storage permission:
 
 Camera permission:
 
-```
+``` dart
     bool isPermissionGranted = await PermissionHandler().getCameraPermission(
       context: context,
       permissionDescriptionText: "Permission required to access camera",
@@ -195,7 +195,7 @@ Camera permission:
 
 Photos permission (For IOS only):
 
-```
+``` dart
     bool isPermissionGranted = await PermissionHandler().getPhotosPermission(
       context: context,
       permissionDescriptionText: "Permission required to access photos",
@@ -205,7 +205,7 @@ Photos permission (For IOS only):
 
 Open settings for denied permission:
 
-```
+``` dart
     await PermissionHandler().openSettings();
 ```
 
