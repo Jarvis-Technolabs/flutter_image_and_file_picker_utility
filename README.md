@@ -18,7 +18,7 @@ in your Flutter applications.
 
 | **Package version** | **Flutter version** |
 |:-------------------:|:-------------------:|
-|        0.0.7        |   3.16.0 - 3.19.3   |
+|    0.0.1 - 0.0.8    |      >=1.17.0       |
 
 ## **Getting Started**
 
