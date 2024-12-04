@@ -1,3 +1,7 @@
+## 0.0.9
+
+- Updated image_cropper: ^8.0.2 
+
 ## 0.0.8
 
 README.md update

@@ -242,24 +242,33 @@ class ImagePickerUtil {
       maxHeight: cropImageMaxHeight,
       maxWidth: cropImageMaxWidth,
       sourcePath: file.path,
-      aspectRatioPresets: aspectRatioPresets ??
-          [
-            CropAspectRatioPreset.square,
-            CropAspectRatioPreset.ratio3x2,
-            CropAspectRatioPreset.original,
-            CropAspectRatioPreset.ratio4x3,
-            CropAspectRatioPreset.ratio16x9
-          ],
       uiSettings: uiSettings ??
           [
             AndroidUiSettings(
-                toolbarTitle: 'Cropper',
-                toolbarColor: Theme.of(context).appBarTheme.backgroundColor,
-                toolbarWidgetColor: Theme.of(context).iconTheme.color,
-                initAspectRatio: CropAspectRatioPreset.original,
-                lockAspectRatio: false),
+              toolbarTitle: 'Cropper',
+              toolbarColor: Theme.of(context).appBarTheme.backgroundColor,
+              toolbarWidgetColor: Theme.of(context).iconTheme.color,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false,
+              aspectRatioPresets: aspectRatioPresets ??
+                  [
+                    CropAspectRatioPreset.square,
+                    CropAspectRatioPreset.ratio3x2,
+                    CropAspectRatioPreset.original,
+                    CropAspectRatioPreset.ratio4x3,
+                    CropAspectRatioPreset.ratio16x9
+                  ],
+            ),
             IOSUiSettings(
               title: 'Cropper',
+              aspectRatioPresets: aspectRatioPresets ??
+                  [
+                    CropAspectRatioPreset.square,
+                    CropAspectRatioPreset.ratio3x2,
+                    CropAspectRatioPreset.original,
+                    CropAspectRatioPreset.ratio4x3,
+                    CropAspectRatioPreset.ratio16x9
+                  ],
             ),
           ],
     );
