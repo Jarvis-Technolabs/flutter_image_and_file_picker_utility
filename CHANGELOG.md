@@ -1,3 +1,7 @@
+## 0.0.10
+
+- Flutter version upgrade to 3.32.8
+
 ## 0.0.9
 
 - Updated image_cropper: ^8.0.2 
