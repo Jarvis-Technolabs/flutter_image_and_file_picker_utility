@@ -18,15 +18,17 @@ class PermissionHandler {
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
     PermissionStatus? status;
+    Permission permission = Permission.storage;
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      status = androidInfo.version.sdkInt >= 33
-          ? await Permission.photos.request()
-          : await Permission.storage.request();
-    } else {
-      status = await Permission.storage.request();
+      if (androidInfo.version.sdkInt >= 33) {
+        return true;
+      }
+      permission = await Permission.storage;
     }
+
+    status = await permission.request();
     if (status == PermissionStatus.granted) {
       return true;
     } else {

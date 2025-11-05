@@ -1,3 +1,7 @@
+## 0.0.11
+
+- Updated permission handling for compatibility with the latest Android SDK versions.
+
 ## 0.0.10
 
 - Flutter version upgrade to 3.32.8

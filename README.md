@@ -19,7 +19,8 @@ in your Flutter applications.
 | **Package version** | **Flutter version** |
 |:-------------------:|:-------------------:|
 |    0.0.1 - 0.0.9    |      >=1.17.0       |
-|   0.0.9 - 0.0.10    |      >=1.17.0       |
+|   0.0.9 - 0.0.10    |      >=3.32.8       |
+|   0.0.10 - 0.0.11   |      >=3.32.8      |
 
 ## **Getting Started**
 
@@ -31,7 +32,7 @@ Add the following dependency to your pubspec.yaml file:
 
 ``` dart
     dependencies:
-      image_and_file_picker_utility: ^0.0.7
+      image_and_file_picker_utility: ^0.0.11
 
 ```
 
