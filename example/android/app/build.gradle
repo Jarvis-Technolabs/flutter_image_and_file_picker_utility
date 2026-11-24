@@ -64,4 +64,7 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    // uCrop's published Android artifact omits this runtime dependency.
+    implementation "com.squareup.okhttp3:okhttp:5.1.0"
+}

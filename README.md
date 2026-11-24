@@ -70,6 +70,14 @@ Add activity to the application tag for crop image:
 
 ```
 
+If you enable image cropping, add OkHttp to the app's Gradle dependencies. The uCrop Android artifact used by the cropper omits this dependency from its published metadata, which can cause R8 to fail when building a release.
+
+```gradle
+dependencies {
+    implementation("com.squareup.okhttp3:okhttp:5.1.0")
+}
+```
+
 ### **Step 3: IOS Setup**
 
 Add permission to the Podfile like below:

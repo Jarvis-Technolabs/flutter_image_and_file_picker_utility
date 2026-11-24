@@ -4,6 +4,7 @@
 - Use system-selected file access for document picking and Android gallery selection.
 - Handle canceled selections and files without local paths. Use `compressionQuality` to opt into media compression.
 - Require Flutter 3.38.1 and Dart 3.10 or later.
+- Document and include the cropper’s OkHttp dependency in the Android example.
 
 ## 0.0.11
 
