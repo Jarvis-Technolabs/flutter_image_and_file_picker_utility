@@ -12,7 +12,7 @@ in your Flutter applications.
 * Image cropping functionality
 * Save picked camera images to the device
 * Image compression for optimized storage usage
-* File picking with permission handling
+* File picking through the operating system’s document picker
 
 ## **Flutter Compatibility**
 
@@ -21,6 +21,9 @@ in your Flutter applications.
 |    0.0.1 - 0.0.9    |      >=1.17.0       |
 |   0.0.9 - 0.0.10    |      >=3.32.8       |
 |   0.0.10 - 0.0.11   |      >=3.32.8      |
+|        0.1.0        |      >=3.38.1      |
+
+Version 0.1.0 also requires Dart 3.10 or later.
 
 ## **Getting Started**
 
@@ -32,7 +35,7 @@ Add the following dependency to your pubspec.yaml file:
 
 ``` dart
     dependencies:
-      image_and_file_picker_utility: ^0.0.11
+      image_and_file_picker_utility: ^0.1.0
 
 ```
 
@@ -45,16 +48,13 @@ Then run:
 
 ### **Step 2: Android Setup**
 
-Add Permissions to AndroidManifest.xml:
+Declare camera permission in `AndroidManifest.xml` if you use the camera helper. Document and gallery picking use system-selected access.
 
 ``` xml
-    <uses-permission android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-
 ```
+
+If you opt in to saving camera captures, follow the [Gal platform setup](https://pub.dev/packages/gal#setup), including the requirements for older Android versions.
 
 Add activity to the application tag for crop image:
 
@@ -62,7 +62,7 @@ Add activity to the application tag for crop image:
     <application>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" 
         </activity>
@@ -157,13 +157,13 @@ Image cropping
 #### File:
 
 ``` dart
-    import 'package:file_picker/file_picker.dart';
+    import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
 ```
 
 ``` dart
     final List<File>? pickedFileList = await FilePickerUtil().getFilePicker(
       allowMultiple: true,
-      allowCompression: true,
+      // Set compressionQuality from 1 to 100 to compress supported media.
       fileType: FileType.any,
       context: context,
       /// When you want to pick specific extensions files then choose type as FileType.custom and pass the extensions using allowedExtensions parameter
@@ -175,7 +175,7 @@ Image cropping
 
 #### Permission Handling:
 
-Storage permission:
+Storage permission for legacy callers that explicitly request broader Android storage access:
 
 ``` dart
     bool isPermissionGranted = await PermissionHandler().getStoragePermission(

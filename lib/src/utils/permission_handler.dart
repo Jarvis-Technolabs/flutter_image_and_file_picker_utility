@@ -17,51 +17,26 @@ class PermissionHandler {
     /// [deniedPermissionsSettingsDialogModel] pass the object to customize denied permission dialog
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
-    PermissionStatus? status;
-    Permission permission = Permission.storage;
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
       if (androidInfo.version.sdkInt >= 33) {
         return true;
       }
-      permission = await Permission.storage;
     }
 
-    status = await permission.request();
-    if (status == PermissionStatus.granted) {
-      return true;
-    } else {
-      if (Platform.isAndroid) {
-        if (status == PermissionStatus.permanentlyDenied ||
-            status.isRestricted) {
-          customDialog(
-              context: context.mounted ? context : context,
-              deniedPermissionsSettingsDialogModel:
-                  deniedPermissionsSettingsDialogModel,
-              permissionDescriptionText: permissionDescriptionText);
-          return false;
-        } else {
-          return false;
-        }
-      } else if (Platform.isIOS) {
-        Permission.storage.request().then(
-          (status) async {
-            if (status == PermissionStatus.denied ||
-                status == PermissionStatus.restricted) {
-              customDialog(
-                context: context,
-                deniedPermissionsSettingsDialogModel:
-                    deniedPermissionsSettingsDialogModel,
-                permissionDescriptionText: permissionDescriptionText,
-              );
-              return false;
-            } else {
-              return false;
-            }
-          },
-        );
-      }
+    final status = await Permission.storage.request();
+    if (status.isGranted) return true;
+    if (!context.mounted) return false;
+
+    if ((Platform.isAndroid &&
+            (status.isPermanentlyDenied || status.isRestricted)) ||
+        (Platform.isIOS && (status.isDenied || status.isRestricted))) {
+      customDialog(
+        context: context,
+        deniedPermissionsSettingsDialogModel:
+            deniedPermissionsSettingsDialogModel,
+        permissionDescriptionText: permissionDescriptionText,
+      );
     }
     return false;
   }
@@ -78,6 +53,7 @@ class PermissionHandler {
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
     PermissionStatus status = await Permission.camera.request();
+    if (!context.mounted) return status.isGranted;
     if (status == PermissionStatus.granted) {
       return true;
     } else if (status == PermissionStatus.denied) {
@@ -89,7 +65,7 @@ class PermissionHandler {
               (status == PermissionStatus.restricted ||
                   status == PermissionStatus.permanentlyDenied))) {
         customDialog(
-          context: context.mounted ? context : context,
+          context: context,
           permissionDescriptionText: permissionDescriptionText,
           deniedPermissionsSettingsDialogModel:
               deniedPermissionsSettingsDialogModel,
@@ -113,6 +89,7 @@ class PermissionHandler {
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
     PermissionStatus status = await Permission.photos.request();
+    if (!context.mounted) return status.isGranted || status.isLimited;
     if (status == PermissionStatus.granted ||
         status == PermissionStatus.limited) {
       return true;
@@ -122,7 +99,7 @@ class PermissionHandler {
       if (status == PermissionStatus.restricted ||
           status == PermissionStatus.permanentlyDenied) {
         customDialog(
-          context: context.mounted ? context : context,
+          context: context,
           permissionDescriptionText: permissionDescriptionText,
           deniedPermissionsSettingsDialogModel:
               deniedPermissionsSettingsDialogModel,
@@ -135,7 +112,7 @@ class PermissionHandler {
   }
 
   /// custom dialog to show permanently denied permission dialog and device settings navigation
-  customDialog({
+  void customDialog({
     /// pass the BuildContext
     required BuildContext context,
 
@@ -146,47 +123,46 @@ class PermissionHandler {
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) {
     showDialog(
-        context: context,
-        builder: (_) {
-          return Dialog(
-            elevation: 0,
-            insetPadding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 16.0,
-            ),
-            shape: RoundedRectangleBorder(
+      context: context,
+      builder: (_) {
+        return Dialog(
+          elevation: 0,
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 16.0,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.0),
+              color: Theme.of(context).scaffoldBackgroundColor,
+              boxShadow: [
+                BoxShadow(
+                  offset: const Offset(0, 10),
+                  color: Theme.of(context).shadowColor,
+                  blurRadius: 24.0,
+                ),
+              ],
             ),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                color: Theme.of(context).scaffoldBackgroundColor,
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(
-                      0,
-                      10,
-                    ),
-                    color: Theme.of(context).shadowColor,
-                    blurRadius: 24.0,
-                  ),
-                ],
-              ),
-              child: CustomAlertWithTwoButtons(
-                titleText: deniedPermissionsSettingsDialogModel?.titleText ??
-                    'Permission Required',
-                descriptionText: permissionDescriptionText,
-                negativeButtonText:
-                    deniedPermissionsSettingsDialogModel?.negativeButtonText ??
-                        "Close",
-                settingsButtonText:
-                    deniedPermissionsSettingsDialogModel?.settingsButtonText ??
-                        'Go To Settings',
-              ),
+            child: CustomAlertWithTwoButtons(
+              titleText:
+                  deniedPermissionsSettingsDialogModel?.titleText ??
+                  'Permission Required',
+              descriptionText: permissionDescriptionText,
+              negativeButtonText:
+                  deniedPermissionsSettingsDialogModel?.negativeButtonText ??
+                  "Close",
+              settingsButtonText:
+                  deniedPermissionsSettingsDialogModel?.settingsButtonText ??
+                  'Go To Settings',
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   /// open settings to enable permission for android and IOS

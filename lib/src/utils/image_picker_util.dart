@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 class ImagePickerUtil {
   Future<void> showImagePickerBottomSheet({
     /// [context] as BuildContext
-    context,
+    required BuildContext context,
 
     /// [bottomSheetTitle] pass String value for ImagePicker bottomSheet's title
     String? bottomSheetTitle,
@@ -47,10 +47,10 @@ class ImagePickerUtil {
     /// [bottomSheetTitlePadding] ImagePicker bottomSheet's title padding
     EdgeInsetsGeometry? bottomSheetTitlePadding,
 
-    /// [cropImagePlatformUiSettings] pass the List<PlatformUiSettings> if [isCropImage] is true
+    /// [cropImagePlatformUiSettings] pass the `List<PlatformUiSettings>` if [isCropImage] is true
     List<PlatformUiSettings>? cropImagePlatformUiSettings,
 
-    /// [cropImageAspectRatioPresets] pass the List<CropAspectRatioPreset> if [isCropImage] is true
+    /// [cropImageAspectRatioPresets] pass the `List<CropAspectRatioPreset>` if [isCropImage] is true
     List<CropAspectRatioPreset>? cropImageAspectRatioPresets,
 
     /// [cropImageAspectRatioPresets] pass the int value if [isCropImage] is true
@@ -84,7 +84,7 @@ class ImagePickerUtil {
                 top: Radius.circular(15),
               ),
             ),
-        builder: (BuildContext _) => Wrap(
+        builder: (BuildContext sheetContext) => Wrap(
               children: [
                 Container(
                   color: Colors.transparent,
@@ -146,8 +146,10 @@ class ImagePickerUtil {
                                   saveCameraImage:
                                       savePickedCameraImageToStorage);
                               onImageSelection(file);
-                              if (file != null) {
-                                Navigator.of(context).pop();
+                              if (file != null &&
+                                  sheetContext.mounted &&
+                                  ModalRoute.of(sheetContext)?.isCurrent == true) {
+                                Navigator.of(sheetContext).pop();
                               }
                             },
                             child: Padding(
@@ -182,8 +184,10 @@ class ImagePickerUtil {
                                   aspectRatioPresets:
                                       cropImageAspectRatioPresets);
                               onImageSelection(file);
-                              if (file != null) {
-                                Navigator.of(context).pop();
+                              if (file != null &&
+                                  sheetContext.mounted &&
+                                  ModalRoute.of(sheetContext)?.isCurrent == true) {
+                                Navigator.of(sheetContext).pop();
                               }
                             },
                             child: Padding(
@@ -226,7 +230,7 @@ class ImagePickerUtil {
     /// [uiSettings] controls UI customization on specific platform (android, ios, web,...)
     /// See:
     ///  * [AndroidUiSettings] controls UI customization for Android
-    ///  * [IOSUiSettings] controls UI customization for iOS    List<PlatformUiSettings>? uiSettings,
+    ///  * [IOSUiSettings] controls UI customization for iOS    `List<PlatformUiSettings>`? uiSettings,
     List<PlatformUiSettings>? uiSettings,
 
     ///  [aspectRatioPresets] controls the list of aspect ratios in the crop menu view.
@@ -290,7 +294,7 @@ class ImagePickerUtil {
     /// [uiSettings] controls UI customization on specific platform (android, ios, web,...)
     /// See:
     ///  * [AndroidUiSettings] controls UI customization for Android
-    ///  * [IOSUiSettings] controls UI customization for iOS    List<PlatformUiSettings>? uiSettings,
+    ///  * [IOSUiSettings] controls UI customization for iOS    `List<PlatformUiSettings>`? uiSettings,
     List<PlatformUiSettings>? uiSettings,
 
     ///  [aspectRatioPresets] controls the list of aspect ratios in the crop menu view.
@@ -314,14 +318,8 @@ class ImagePickerUtil {
     /// [cropImageMaxHeight] pass int value for max height of cropImage
     int? cropImageMaxHeight,
   }) async {
-    if (Platform.isAndroid
-        ? await PermissionHandler().getStoragePermission(
-            context: context,
-            deniedPermissionsSettingsDialogModel:
-                deniedPermissionsSettingsDialogModel,
-            permissionDescriptionText: permissionDescriptionText,
-          )
-        : await PermissionHandler().getPhotosPermission(
+    if (!Platform.isIOS ||
+        await PermissionHandler().getPhotosPermission(
             context: context,
             deniedPermissionsSettingsDialogModel:
                 deniedPermissionsSettingsDialogModel,
@@ -333,9 +331,10 @@ class ImagePickerUtil {
         imageQuality: pickImageImageQuality,
       );
       if (pickedFile != null && isCrop) {
+        if (!context.mounted) return null;
         return cropImage(
             file: File(pickedFile.path),
-            context: context.mounted ? context : context,
+            context: context,
             uiSettings: uiSettings,
             cropImageMaxHeight: cropImageMaxHeight,
             cropImageMaxWidth: cropImageMaxWidth);
@@ -362,7 +361,7 @@ class ImagePickerUtil {
     /// [uiSettings] controls UI customization on specific platform (android, ios, web,...)
     /// See:
     ///  * [AndroidUiSettings] controls UI customization for Android
-    ///  * [IOSUiSettings] controls UI customization for iOS    List<PlatformUiSettings>? uiSettings,
+    ///  * [IOSUiSettings] controls UI customization for iOS    `List<PlatformUiSettings>`? uiSettings,
     List<PlatformUiSettings>? uiSettings,
 
     ///  [aspectRatioPresets] controls the list of aspect ratios in the crop menu view.
@@ -401,9 +400,10 @@ class ImagePickerUtil {
         imageQuality: pickImageImageQuality,
       );
       if (pickedFile != null && isCrop) {
+        if (!context.mounted) return null;
         File? croppedImageFile = await cropImage(
             file: File(pickedFile.path),
-            context: context.mounted ? context : context,
+            context: context,
             uiSettings: uiSettings,
             cropImageMaxWidth: cropImageMaxWidth,
             cropImageMaxHeight: cropImageMaxHeight);

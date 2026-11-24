@@ -5,6 +5,7 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const CustomButton({
+    super.key,
     required this.text,
     required this.onPressed,
   });
@@ -14,15 +15,15 @@ class CustomButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
-        foregroundColor: MaterialStateProperty.all(Colors.white),
-        padding: MaterialStateProperty.all(
-          EdgeInsets.symmetric(
+        backgroundColor: WidgetStateProperty.all(Colors.deepPurple),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
+        padding: WidgetStateProperty.all(
+          const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 10,
           ),
         ),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),

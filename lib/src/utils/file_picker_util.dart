@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
+import '../entities/denied_permission_settings_dialog_model.dart';
 
 class FilePickerUtil {
-  /// pick single or multiple file using this method with permission handling
+  /// Picks local files through the platform's system picker.
+  ///
+  /// The picker grants access to the selected files. Returns null on cancellation
+  /// or when the selection has no local paths.
   Future<List<File>?> getFilePicker({
     /// context
     required BuildContext context,
@@ -19,8 +22,12 @@ class FilePickerUtil {
     /// [allowedExtensions] pass array of allowedExtensions
     List<String>? allowedExtensions,
 
-    /// [allowCompression] pass bool value for compression
+    /// Retained for callers using the previous picker interface.
+    @Deprecated('Set compressionQuality to enable media compression.')
     bool allowCompression = false,
+
+    /// Media compression quality from 1 to 100, or 0 to keep the original.
+    int compressionQuality = 0,
 
     /// [allowMultiple] pass bool value for allowMultiple
     bool allowMultiple = false,
@@ -28,27 +35,26 @@ class FilePickerUtil {
     /// Using [deniedPermissionsSettingsDialogModel] we can able to customize denied permission dialog style and content
     DeniedPermissionsSettingsDialogModel? deniedPermissionsSettingsDialogModel,
   }) async {
-    if (await PermissionHandler().getStoragePermission(
-      context: context,
-      deniedPermissionsSettingsDialogModel:
-          deniedPermissionsSettingsDialogModel,
-      permissionDescriptionText:
-          permissionDescriptionText ?? "Permission is required to access files",
-    )) {
-      final FilePickerResult? result = await FilePicker.platform.pickFiles(
+    final List<PlatformFile> selection;
+    if (allowMultiple) {
+      selection = await FilePicker.pickFiles(
         type: fileType,
         allowedExtensions: allowedExtensions,
-        allowCompression: allowCompression,
-        allowMultiple: allowMultiple,
+        compressionQuality: compressionQuality,
       );
-      if (result != null && result.files.isNotEmpty) {
-        List<File> pickedFileList =
-            result.files.map((e) => File(e.path!)).toList();
-        return pickedFileList;
-      } else {
-        return null;
-      }
+    } else {
+      final file = await FilePicker.pickFile(
+        type: fileType,
+        allowedExtensions: allowedExtensions,
+        compressionQuality: compressionQuality,
+      );
+      selection = [?file];
     }
-    return null;
+
+    final files = [
+      for (final file in selection)
+        if (file.path case final path? when path.isNotEmpty) File(path),
+    ];
+    return files.isEmpty ? null : files;
   }
 }

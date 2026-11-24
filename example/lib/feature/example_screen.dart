@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:example/feature/widget/custom_button.dart';
 import 'package:example/feature/widget/file_list_item.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_and_file_picker_utility/image_and_file_picker_utility.dart';
 
@@ -21,7 +20,7 @@ class _ExampleScreenState extends State<ExampleScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -35,7 +34,7 @@ class _ExampleScreenState extends State<ExampleScreen> {
                   itemCount: files.length + 1,
                   itemBuilder: (context, index) {
                     if (index == files.length) {
-                      return SizedBox.shrink();
+                      return const SizedBox.shrink();
                     }
                     return FileListItem(
                       file: files[index],
@@ -54,7 +53,6 @@ class _ExampleScreenState extends State<ExampleScreen> {
                       await ImagePickerUtil().showImagePickerBottomSheet(
                           context: context,
                           isCropImage: true,
-                          savePickedCameraImageToStorage: true,
                           pickImageImageQuality: 100,
                           onImageSelection: (File? pickedImage) {
                             if (pickedImage != null) {
@@ -71,7 +69,6 @@ class _ExampleScreenState extends State<ExampleScreen> {
                       final List<File>? pickedFileList =
                           await FilePickerUtil().getFilePicker(
                         allowMultiple: true,
-                        allowCompression: true,
                         fileType: FileType.any,
 
                         /// When you want to pick specific extensions files then choose type as FileType.custom and pass the extensions using allowedExtensions parameter

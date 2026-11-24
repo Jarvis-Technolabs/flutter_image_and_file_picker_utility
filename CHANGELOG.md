@@ -1,3 +1,10 @@
+## 0.1.0
+
+- Upgrade to File Picker 13 and Device Info Plus 13 for compatibility with Win32 6.
+- Use system-selected file access for document picking and Android gallery selection.
+- Handle canceled selections and files without local paths. Use `compressionQuality` to opt into media compression.
+- Require Flutter 3.38.1 and Dart 3.10 or later.
+
 ## 0.0.11
 
 - Updated permission handling for compatibility with the latest Android SDK versions.

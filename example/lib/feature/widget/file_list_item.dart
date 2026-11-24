@@ -7,6 +7,7 @@ class FileListItem extends StatelessWidget {
   final VoidCallback onPressed;
 
   const FileListItem({
+    super.key,
     required this.file,
     required this.onPressed,
   });
@@ -14,7 +15,7 @@ class FileListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         vertical: 5,
       ),
       decoration: BoxDecoration(
@@ -26,12 +27,12 @@ class FileListItem extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         child: Padding(
-          padding: EdgeInsets.all(
+          padding: const EdgeInsets.all(
             10,
           ),
           child: Text(
             file.path.split('/').last,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
             ),
           ),
